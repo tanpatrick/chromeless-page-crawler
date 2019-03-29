@@ -1,5 +1,4 @@
 const puppeteer = require('puppeteer');
-const baseUrl = 'http://localhost';
 
 /**
  * Class use to access a given url then generates the page performance timing (e.g. duration how long the page took to load).
@@ -13,9 +12,11 @@ class Crawler {
     /**
      * Creates a new instance.
      *
-     * @param url - url of the page to be access
+     * @param baseUrl   - base url of the page to access
+     * @param url       - path of the page to be access
      */
-    constructor(url) {
+    constructor(baseUrl, url) {
+        this.baseUrl = baseUrl;
         this.url = url;
     }
 
@@ -38,7 +39,7 @@ class Crawler {
 
         this.page = await this.browser.newPage();
 
-        await this.page.goto(`${baseUrl}${this.url}`, {
+        await this.page.goto(`${this.baseUrl}${this.url}`, {
             waitUntil: 'load',
             timeout: 0
         });
